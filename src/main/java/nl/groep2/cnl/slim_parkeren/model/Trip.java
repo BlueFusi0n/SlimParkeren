@@ -2,10 +2,34 @@ package nl.groep2.cnl.slim_parkeren.model;
 
 import java.util.*;
 
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.NotEmpty;
+import org.mongodb.morphia.annotations.Entity;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+@Entity(value = "Trips", noClassnameStored = true)
 public class Trip extends EntityModel{
 	
-	private String FlightNr1, FlightNr2;
-	private Date ArrivalDate, DepartureDate;
+	
+	
+	@NotEmpty
+	@JsonProperty("FlightNr1")
+	private String FlightNr1;
+	
+	@NotEmpty
+	@JsonProperty("FlightNr2")
+	private String FlightNr2;
+
+	@NotNull
+	@JsonProperty("ArrivalDate")
+	private Date ArrivalDate;
+
+	@NotNull
+	@JsonProperty("DepartureDate")
+	private Date DepartureDate;
+	
 	
 	public String getFlightNr1() {
 		return FlightNr1;
