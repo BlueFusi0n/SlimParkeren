@@ -6,8 +6,6 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 public class Discount extends EntityModel {
 	
-
-	@NotEmpty
 	private String Code;
 	@NotEmpty
 	private Date ExpiryDate;
