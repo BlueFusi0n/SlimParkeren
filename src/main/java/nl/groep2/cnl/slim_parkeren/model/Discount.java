@@ -13,6 +13,7 @@ public class Discount extends EntityModel {
 	private Date ExpiryDate;
 	@NotEmpty
 	private int Amount; //Amount is number of discountcodes left (-1 = infinite)
+	@NotEmpty
 	private int Deal; 	//Deal is number in percentage as discount
 	
 	public String getCode() {
