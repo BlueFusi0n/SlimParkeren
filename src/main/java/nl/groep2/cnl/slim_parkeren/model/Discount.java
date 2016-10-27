@@ -6,9 +6,9 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 public class Discount extends EntityModel {
 	
-	
-	private String Code;
+
 	@NotEmpty
+	private String Code;
 	private Date ExpiryDate;
 	private int Amount; //Amount is number of discountcodes left (-1 = infinite)
 	private int Deal; 	//Deal is number in percentage as discount
