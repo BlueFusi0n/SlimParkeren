@@ -2,8 +2,12 @@ package nl.groep2.cnl.slim_parkeren.model;
 
 import java.util.Date;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
 public class Discount extends EntityModel {
 	
+	
+	@NotEmpty
 	private String Code;
 	private Date ExpiryDate;
 	private int Amount; //Amount is number of discountcodes left (-1 = infinite)
