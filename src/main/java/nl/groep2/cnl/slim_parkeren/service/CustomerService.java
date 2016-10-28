@@ -32,12 +32,12 @@ public class CustomerService extends BaseService {
         return customerDAO.getAll();
     }
     
-    public Response Create(Customer customer){
+    public Response add(Customer customer){
     	return customerDAO.createCustomer(customer);
     }
     
-    public Response Create(List<Customer> customers){
-    	return customerDAO.createCustomers(customers);
+    public Response add(List<Customer> customers){
+    	return customerDAO.addAll(customers);
     }
     
     public Response update(Customer customer){
@@ -46,9 +46,5 @@ public class CustomerService extends BaseService {
     
     public Response delete(Customer customer){
     	return customerDAO.deleteCustomer(customer);
-    }
-    
-    public Response addCar(Car car){
-    	return carDAO.addCar(car);
     }
 }

@@ -34,13 +34,13 @@ public class CustomerDAO extends BaseDAO<Customer> {
     }
     
     public Customer get(String id){
-    	Car car = carDAO.get(id);
     	Customer customer = super.get(id);
-		if(car != null) customer.setCar(car);	
+    	List<Car> cars = carDAO.getByCustomerId(id);
+    	customer.setCars(cars);
     	return customer;    	
     }
     
-    public Response createCustomers(List<Customer> customers){
+    public Response addAll(List<Customer> customers){
     	for(Customer customer : customers)
     		if(save( customer ) == null)
         		return Response.serverError().build();  

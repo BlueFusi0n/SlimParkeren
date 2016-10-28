@@ -1,5 +1,8 @@
 package nl.groep2.cnl.slim_parkeren.model;
 
+import javax.validation.constraints.Pattern;
+
+import org.bson.types.ObjectId;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.mongodb.morphia.annotations.Entity;
 
@@ -9,6 +12,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class Car extends EntityModel {
 	
 	@NotEmpty
+	@Pattern(regexp="^(?>[A-Z]{2}|\\d\\d)-(?>[A-Z]{2}|\\d\\d)-(?<!\\d\\d-\\d\\d-)\\d\\d$|^(?>[A-Z]{2}|\\d\\d)-(?>[A-Z]{2}|\\d\\d)-(?<![A-Z]{2}-[A-Z]{2}-)[A-Z]{2}$|^\\d\\d-[A-Z]{3}-\\d$", message=": Vul een geldig kenteken in.")
 	@JsonProperty("LicensePlate")
 	private String licensePlate;
 	@NotEmpty
@@ -20,7 +24,14 @@ public class Car extends EntityModel {
 	@NotEmpty
 	@JsonProperty("Type")
 	private String type;
+	private String customerId;
 	
+	public String getCustomerId() {
+		return customerId;
+	}
+	public void setCustomerId(String customerId) {
+		this.customerId = customerId;
+	}
 	public String getLicensePlate() {
 		return licensePlate;
 	}

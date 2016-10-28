@@ -1,5 +1,8 @@
 package nl.groep2.cnl.slim_parkeren.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.hibernate.validator.constraints.*;
 import org.mongodb.morphia.annotations.Embedded;
 import org.mongodb.morphia.annotations.Entity;
@@ -24,7 +27,7 @@ public class Customer extends EntityModel {
 	private String email;
 	@Embedded
 	@JsonProperty("Car")
-	private Car car;
+	private List<Car> cars;
 	
 	public String getFirstName() {
 		return firstName;
@@ -50,10 +53,15 @@ public class Customer extends EntityModel {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public Car getCar() {
-		return car;
+	public List<Car> getCars() {
+		return cars;
 	}
-	public void setCar(Car car) {
-		this.car = car;
+	public void setCars(List<Car> cars) {
+		this.cars = cars;
+	}	
+	public void addCar(Car car){
+		if(this.cars == null)
+			cars = new ArrayList<Car>();
+		cars.add(car);
 	}
 }

@@ -22,6 +22,7 @@ import nl.groep2.cnl.slim_parkeren.model.Customer;
 import nl.groep2.cnl.slim_parkeren.model.User;
 import nl.groep2.cnl.slim_parkeren.presentation.CustomerPresenter;
 import nl.groep2.cnl.slim_parkeren.presentation.model.CustomerView;
+import nl.groep2.cnl.slim_parkeren.service.CarService;
 import nl.groep2.cnl.slim_parkeren.service.CustomerService;
 
 @Path( "/customers" )
@@ -30,12 +31,14 @@ import nl.groep2.cnl.slim_parkeren.service.CustomerService;
 public class CustomerResource extends BaseResource {
 	
     private final CustomerService customerService;
+    private final CarService carService;
     private final CustomerPresenter customerPresenter;
 
     @Inject
-    public CustomerResource(CustomerService customerService, CustomerPresenter customerPresenter){
+    public CustomerResource(CustomerService customerService, CustomerPresenter customerPresenter, CarService carService){
     	this.customerService = customerService;
     	this.customerPresenter = customerPresenter;
+    	this.carService = carService;
     }
     
     @RolesAllowed("ADMIN")
@@ -59,15 +62,24 @@ public class CustomerResource extends BaseResource {
     @RolesAllowed("ADMIN")
     @POST
     @Path("/add")
-    public Response create(@Valid Customer customer){
-		return customerService.Create(customer);
+    public Response add(@Valid Customer customer){
+		return customerService.add(customer);
+    }
+    
+    @POST
+    @Path("/{id}/cars")
+    public Response addCar(@PathParam("id") String id, @Valid Car car){
+    	Customer customer = customerService.get(id);
+    	if(customer == null)
+    		return Response.noContent().build();
+    	return carService.add(id, car);
     }
     
     @RolesAllowed("ADMIN")
     @POST
     @Path("/addList")
-    public Response createAll(@Valid List<Customer> customers){
-    	return customerService.Create(customers);
+    public Response addAll(@Valid List<Customer> customers){
+    	return customerService.add(customers);
     }
     
     @RolesAllowed("ADMIN")
@@ -90,14 +102,14 @@ public class CustomerResource extends BaseResource {
     	return customerService.delete(c);
     }
     
-    @RolesAllowed("ADMIN")
-    @PUT
-    @Path("/{id}/addCar")
-    public Response addCar(@PathParam("id") String id, @Valid Car car){
-    	Customer customer = customerService.get(id);
-    	if(customer == null)
-    		return Response.noContent().build();
-    	car.setId(customer.getId());
-    	return customerService.addCar(car);
-    }
+//    @RolesAllowed("ADMIN")
+//    @PUT
+//    @Path("/{id}/addCar")
+//    public Response updateCar(@PathParam("id") String id, @Valid Car car){
+//    	Customer customer = customerService.get(id);
+//    	if(customer == null)
+//    		return Response.noContent().build();
+//    	car.setId(customer.getId());
+//    	return customerService.addCar(car);
+//    }
 }

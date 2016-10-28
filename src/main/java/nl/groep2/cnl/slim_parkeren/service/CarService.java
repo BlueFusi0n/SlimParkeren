@@ -25,11 +25,11 @@ public class CarService extends BaseService {
         return carDAO.getAll();
     }
     
-    public Response Add(Car car){
-    	return carDAO.addCar(car);
+    public Response add(String id, Car car){
+    	return carDAO.addCar(id, car);
     }
     
-    public Response Add(List<Car> cars){
+    public Response add(List<Car> cars){
     	return carDAO.addCars(cars);
     }
     
