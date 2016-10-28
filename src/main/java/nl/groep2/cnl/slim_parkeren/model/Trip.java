@@ -16,43 +16,51 @@ public class Trip extends EntityModel{
 	
 	@NotEmpty
 	@JsonProperty("FlightNr1")
-	private String FlightNr1;
+	private String flightNr1;
 	
 	@NotEmpty
 	@JsonProperty("FlightNr2")
-	private String FlightNr2;
+	private String flightNr2;
 
 	@NotNull
 	@JsonProperty("ArrivalDate")
-	private Date ArrivalDate;
+	private Date arrivalDate;
 
 	@NotNull
 	@JsonProperty("DepartureDate")
-	private Date DepartureDate;
-	
-	
+	private Date departureDate;
+
 	public String getFlightNr1() {
-		return FlightNr1;
+		return flightNr1;
 	}
+
 	public void setFlightNr1(String flightNr1) {
-		FlightNr1 = flightNr1;
+		this.flightNr1 = flightNr1;
 	}
+
 	public String getFlightNr2() {
-		return FlightNr2;
+		return flightNr2;
 	}
+
 	public void setFlightNr2(String flightNr2) {
-		FlightNr2 = flightNr2;
+		this.flightNr2 = flightNr2;
 	}
+
 	public Date getArrivalDate() {
-		return ArrivalDate;
+		return arrivalDate;
 	}
+
 	public void setArrivalDate(Date arrivalDate) {
-		ArrivalDate = arrivalDate;
+		this.arrivalDate = arrivalDate;
 	}
+
 	public Date getDepartureDate() {
-		return DepartureDate;
+		return departureDate;
 	}
+
 	public void setDepartureDate(Date departureDate) {
-		DepartureDate = departureDate;
+		this.departureDate = departureDate;
 	}
+	
+	
 }
