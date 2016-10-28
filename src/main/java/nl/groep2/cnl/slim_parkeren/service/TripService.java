@@ -41,7 +41,13 @@ public class TripService extends BaseService{
     }
     
     public Response delete(Trip trip){
-    	return tripDAO.deleteObject(trip);
+    	
+   	   	Date lastUpdateDay = java.sql.Date.valueOf(LocalDate.now().minusWeeks(1));
+    	
+		if(trip.getDepartureDate().after(lastUpdateDay))
+	    	return tripDAO.deleteObject(trip); 	
+
+    	return Response.notAcceptable(null).build();
     }
     
     
