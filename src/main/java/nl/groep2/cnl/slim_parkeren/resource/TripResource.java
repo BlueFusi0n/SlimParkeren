@@ -51,6 +51,13 @@ public class TripResource extends BaseResource{
     }
     
     @RolesAllowed("ADMIN")
+    @POST
+    public Response create(@Valid Trip trip){
+		return tripService.create(trip);
+    }
+    
+    
+    @RolesAllowed("ADMIN")
     @GET
     @Path("/{tripID}")
     public TripView get(@PathParam("tripID") String tripID){
@@ -80,11 +87,5 @@ public class TripResource extends BaseResource{
     	return tripService.delete(trip);
     }
     
-    @RolesAllowed("ADMIN")
-    @POST
-    @Path("/create")
-    public Response create(@Valid Trip trip){
-		return tripService.create(trip);
-    }
-    
+
 }

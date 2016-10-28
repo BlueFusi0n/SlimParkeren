@@ -3,9 +3,7 @@ package nl.groep2.cnl.slim_parkeren.presentation;
 import java.util.ArrayList;
 import java.util.List;
 
-import nl.groep2.cnl.slim_parkeren.model.Car;
 import nl.groep2.cnl.slim_parkeren.model.Customer;
-import nl.groep2.cnl.slim_parkeren.presentation.model.CarView;
 import nl.groep2.cnl.slim_parkeren.presentation.model.CustomerView;
 
 public class CustomerPresenter extends BasePresenter {

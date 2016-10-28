@@ -33,7 +33,6 @@ public class TripService extends BaseService{
     	
    	   	Date lastUpdateDay = java.sql.Date.valueOf(LocalDate.now().minusWeeks(1));
 
-    	
 		if(checkDates(trip) && t.getDepartureDate().after(lastUpdateDay))
 			return tripDAO.updateTrip(t, trip);  	
 		

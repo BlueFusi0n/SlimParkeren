@@ -8,7 +8,6 @@ import org.bson.types.ObjectId;
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.dao.BasicDAO;
 
-import nl.groep2.cnl.slim_parkeren.model.Customer;
 import nl.groep2.cnl.slim_parkeren.model.EntityModel;
 
 public abstract class BaseDAO<T extends EntityModel> extends BasicDAO<T, ObjectId>
