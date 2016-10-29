@@ -1,5 +1,8 @@
 package nl.groep2.cnl.slim_parkeren.persistence;
 
+import java.util.Date;
+import java.util.List;
+
 import javax.inject.Inject;
 import javax.ws.rs.core.Response;
 
@@ -34,4 +37,40 @@ public class TripDAO extends BaseDAO<Trip> {
     		return Response.serverError().build();  
     	    	
     }
+    
+    public Response deleteTrips()
+    {
+    	List<Trip> trips = find().asList();
+    	
+    	if(trips != null){
+        	for(Trip trip : trips)
+        	{
+        		delete(trip);
+        	}
+    		return Response.ok().build();
+    	}
+    	else{
+    		return Response.serverError().build();  
+    	}
+    }
+    
+    
+    public Response deleteTrips(Date date)
+    {
+    	Query<Trip> query = createQuery().field("arrivalDate").lessThanOrEq(date);
+    	
+    	List<Trip> trips = find(query).asList();
+    	
+    	if(trips != null){
+        	for(Trip trip : trips)
+        	{
+        		delete(trip);
+        	}
+    		return Response.ok().build();
+    	}
+    	else{
+    		return Response.serverError().build();  
+    	}
+    }
 }
+

@@ -1,6 +1,7 @@
 package nl.groep2.cnl.slim_parkeren.resource;
 
 
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.security.RolesAllowed;
@@ -14,16 +15,13 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import io.dropwizard.auth.Auth;
-import nl.groep2.cnl.slim_parkeren.model.Customer;
 import nl.groep2.cnl.slim_parkeren.model.Trip;
-import nl.groep2.cnl.slim_parkeren.model.User;
 import nl.groep2.cnl.slim_parkeren.presentation.TripPresenter;
 import nl.groep2.cnl.slim_parkeren.presentation.model.TripView;
-import nl.groep2.cnl.slim_parkeren.presentation.model.UserView;
 import nl.groep2.cnl.slim_parkeren.service.TripService;
 
 @Path( "/trips" )
@@ -49,6 +47,26 @@ public class TripResource extends BaseResource{
             return null;
         return tripPresenter.present(trips);
     }
+    
+//    @RolesAllowed("ADMIN")
+//    @PUT
+//    public Response updateAll(@Valid List<Trip> trip){
+//		return tripService.updateAll(trip);
+//    }
+    
+    @RolesAllowed("ADMIN")
+    @DELETE
+    public Response deleteAll(){
+		return tripService.deleteAll();
+    }
+    
+    @RolesAllowed("ADMIN")
+    @DELETE
+    @Path("/query")
+    public Response deleteSome(@QueryParam("before") String date) {
+     	  return tripService.deleteAll(date);
+    }
+    
     
     @RolesAllowed("ADMIN")
     @POST
