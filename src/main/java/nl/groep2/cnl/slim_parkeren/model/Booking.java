@@ -2,23 +2,46 @@ package nl.groep2.cnl.slim_parkeren.model;
 
 import java.util.Currency;
 
+import org.hibernate.validator.constraints.NotEmpty;
 import org.mongodb.morphia.annotations.Embedded;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class Booking extends EntityModel  {
-	
 	@Embedded
-	private Car car;
-	@Embedded
+	@NotEmpty
+	@JsonProperty("Trip")
 	private Trip trip;
 	@Embedded
+	@NotEmpty
+	@JsonProperty("Customer")
 	private Customer customer;
 	@Embedded
-	private Payment payment;
-	private String bookingNr, comments;
-	private Currency price, btw; 
-	private int days;
+	@NotEmpty
+	@JsonProperty("Car")
+	private Car car;
 	@Embedded
+	@NotEmpty
+	@JsonProperty("Payment")
+	private Payment payment;
+	@Embedded
+	@JsonProperty("Discount")
 	private Discount discount;
+	
+	@NotEmpty
+	@JsonProperty("BookingNr")
+	private String bookingNr;
+	@JsonProperty("Comments")
+	private String comments;
+	@NotEmpty
+	@JsonProperty("Price")
+	private Currency price;
+	@NotEmpty
+	@JsonProperty("Btw")
+	private Currency btw;
+	@NotEmpty
+	@JsonProperty("Days")
+	private int days;
 	
 	public Car getCar() {
 		return car;

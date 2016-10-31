@@ -1,5 +1,6 @@
 package nl.groep2.cnl.slim_parkeren.resource;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.security.RolesAllowed;
@@ -7,17 +8,19 @@ import javax.inject.Inject;
 import javax.validation.Valid;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
+import javax.ws.rs.DefaultValue;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import io.dropwizard.auth.Auth;
 import nl.groep2.cnl.slim_parkeren.model.Car;
-import nl.groep2.cnl.slim_parkeren.model.User;
+import nl.groep2.cnl.slim_parkeren.presentation.CarPresenter;
+import nl.groep2.cnl.slim_parkeren.presentation.model.CarView;
 import nl.groep2.cnl.slim_parkeren.service.CarService;
 
 @Path( "/cars" )
@@ -26,41 +29,32 @@ import nl.groep2.cnl.slim_parkeren.service.CarService;
 public class CarResource extends BaseResource {
 	
     private final CarService carService;
+    private final CarPresenter carPresenter;
 
     @Inject
-    public CarResource(CarService carService){
+    public CarResource(CarService carService, CarPresenter carPresenter){
     	this.carService = carService;
+    	this.carPresenter = carPresenter;
     }
-    
+      
     @RolesAllowed("ADMIN")
     @GET
-    public List<Car> getAll(){
-        List<Car> cars = carService.getAll();    
-        if (cars == null) return null;
-        return cars;
+    public List<CarView> getAll(@QueryParam("color") String color){
+    	List<Car> cars;
+        if(color != null)
+        	cars = carService.getAllByColor(color);
+        else 
+        	cars = carService.getAll();
+        return carPresenter.present(cars);
     }
     
-    @GET
-    @Path("/{license}")
-    public Car get( @PathParam("license") String license){
-        Car car = carService.get(license);
-        if (car == null) return null;
-        return car;    
-    }
     
-//    @RolesAllowed("ADMIN")
-//    @POST
-//    @Path("/")
-//    public Response add(@Valid Car car){
-//		return carService.Add(car);
-//    }
-//    
-//    @RolesAllowed("ADMIN")
-//    @POST
-//    @Path("/addList")
-//    public Response addAll(@Valid List<Car> cars){
-//    	return carService.Add(cars);
-//    }
+    @RolesAllowed("ADMIN")
+    @POST
+    @Path("/addList")
+    public Response addAll(@Valid List<Car> cars){
+    	return carService.add(cars);
+    }
         
     @RolesAllowed("ADMIN")  
     @DELETE

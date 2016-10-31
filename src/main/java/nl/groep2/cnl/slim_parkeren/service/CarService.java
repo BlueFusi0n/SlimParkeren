@@ -20,9 +20,17 @@ public class CarService extends BaseService {
     public Car get(String license){
     	return carDAO.get(license);
     }
+    
+    public List<Car> getAllByCustomerId(String id){
+    	return carDAO.getByCustomerId(id);
+    }
 
     public List<Car> getAll(){
         return carDAO.getAll();
+    }
+    
+    public List<Car> getAllByColor(String color){
+    	return carDAO.getAllByColor(color);
     }
     
     public Response add(String id, Car car){

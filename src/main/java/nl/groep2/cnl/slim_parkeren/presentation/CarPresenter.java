@@ -14,7 +14,8 @@ public class CarPresenter extends BasePresenter {
 		carView.brand = car.getBrand();
 		carView.color = car.getColor();
 		carView.licensePlate = car.getLicensePlate();
-		carView.type = car.getType();            
+		carView.type = car.getType();    
+		carView.customerId = car.getCustomerId();
         return carView;
     }
 

@@ -1,6 +1,5 @@
 package nl.groep2.cnl.slim_parkeren.persistence;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.ws.rs.core.Response;
@@ -18,12 +17,21 @@ public class CarDAO extends BaseDAO<Car> {
     public CarDAO(Datastore ds){
         super(Car.class, ds);
     }
+	
+	public List<Car> getAllByColor(String color){
+		Query<Car> query = createQuery().field("color").equalIgnoreCase(color);
+		return find(query).asList();
+	}
     
     public Response addCar(String id, Car car){
-    	car.setCustomerId(id);
-    	if(save(car) != null)
-    		return Response.status(Response.Status.CREATED).build();   	 
-    	return Response.serverError().build();  
+    	Query<Car> query = createQuery().field("licensePlate").equalIgnoreCase(car.getLicensePlate());
+    	if(find(query).get() == null){
+	    	car.setCustomerId(id);
+	    	if(save(car) != null)
+	    		return Response.status(Response.Status.CREATED).build();   	 
+	    	return Response.serverError().build();
+    	}
+		return Response.notModified("Car already exists").build();
     }
     
     public Response addCars(List<Car> cars){
