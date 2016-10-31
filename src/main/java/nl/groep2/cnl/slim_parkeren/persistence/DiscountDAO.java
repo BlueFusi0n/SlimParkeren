@@ -1,5 +1,7 @@
 package nl.groep2.cnl.slim_parkeren.persistence;
 
+import java.util.List;
+
 import javax.inject.Inject;
 import javax.ws.rs.core.Response;
 
@@ -35,9 +37,13 @@ public class DiscountDAO extends BaseDAO<Discount>{
 		return false;
     }
     
-    
-  
-    
+    public List<Discount> getSome(int amount)
+    {
+    	Query<Discount> query = createQuery().field("amount").greaterThanOrEq(amount);
+    	if(find(query).get() != null)
+    		return find(query).asList(); 
+    	return null;
+    }
     
     public Response updateTrip(Discount discount1, Discount discount2){
     	discount2.setId(discount1.getId());

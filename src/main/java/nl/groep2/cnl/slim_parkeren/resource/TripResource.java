@@ -73,8 +73,7 @@ public class TripResource extends BaseResource{
     public Response create(@Valid Trip trip){
 		return tripService.create(trip);
     }
-    
-    
+       
     @RolesAllowed("ADMIN")
     @GET
     @Path("/{tripID}")

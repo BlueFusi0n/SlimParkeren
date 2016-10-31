@@ -13,12 +13,11 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import io.dropwizard.auth.Auth;
 import nl.groep2.cnl.slim_parkeren.model.Discount;
-import nl.groep2.cnl.slim_parkeren.model.User;
 import nl.groep2.cnl.slim_parkeren.presentation.DiscountPresenter;
 import nl.groep2.cnl.slim_parkeren.presentation.model.DiscountView;
 import nl.groep2.cnl.slim_parkeren.service.DiscountService;
@@ -40,11 +39,17 @@ public class DiscountResource extends BaseResource{
     
     @RolesAllowed("ADMIN")
     @GET
-    public List <DiscountView> getAll( @Auth User authenticator ){
-        List<Discount> discounts = discountService.getAll();    
-        if (discounts == null) 
-            return null;
-        return discountPresenter.present(discounts);
+    public List <DiscountView> getAll(@QueryParam("amount") int amount){
+    	
+    	List<Discount> listOfDiscounts;
+    	
+    	if (String.valueOf(amount)	!= null)
+    		listOfDiscounts = discountService.getSome(amount);
+    	else
+	        listOfDiscounts = discountService.getAll();
+    	
+    	if (listOfDiscounts == null) return null;
+        return discountPresenter.present(listOfDiscounts);	
     }
     
     @RolesAllowed("ADMIN")
@@ -76,5 +81,6 @@ public class DiscountResource extends BaseResource{
     	
     	
     }
+   
 
 }

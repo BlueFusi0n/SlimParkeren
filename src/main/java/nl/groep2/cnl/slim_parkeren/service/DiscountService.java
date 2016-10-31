@@ -8,14 +8,12 @@ import javax.inject.Inject;
 import javax.ws.rs.core.Response;
 
 import nl.groep2.cnl.slim_parkeren.model.Discount;
-import nl.groep2.cnl.slim_parkeren.model.Trip;
 import nl.groep2.cnl.slim_parkeren.persistence.DiscountDAO;
 
 
 public class DiscountService extends BaseService {
 	
 	private final DiscountDAO discountDAO;
-	private boolean exists = false;
 	
 	@Inject
 	public DiscountService (DiscountDAO discountDAO)
@@ -57,11 +55,15 @@ public class DiscountService extends BaseService {
 	    		return discountDAO.deleteObject(discount);
 	    	
 	    	return Response.notAcceptable(null).build();
-	    	
-	    	
-	    	
-	    	
+	    	    	
 	    }
+	    
+	    public List<Discount> getSome(int amount){
+	    	if(amount > 0)
+	    		return discountDAO.getSome(amount);
+	    	return null;
+	    }
+	    
 	    
 
 }
