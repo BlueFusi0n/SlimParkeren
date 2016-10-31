@@ -60,6 +60,7 @@ public class CustomerResource extends BaseResource {
         return customerPresenter.present(customers);
     }
     
+	@RolesAllowed("ADMIN")
     @GET
     @Path( "/{email}" )
     public CustomerView get( @PathParam( "email" ) String email){
@@ -76,6 +77,7 @@ public class CustomerResource extends BaseResource {
     	return id != null ? responsePresenter.present(id, "Success") : responsePresenter.present(null, "Failure");
     }
     
+	@RolesAllowed("ADMIN")
     @POST
     @Path("/{id}/cars")
     public ResponseView addCar(@PathParam("id") String id, @Valid Car car){
@@ -86,6 +88,7 @@ public class CustomerResource extends BaseResource {
     	return carId != null ? responsePresenter.present(carId, "Success") : responsePresenter.present(null, "Failure");
     }
     
+	@RolesAllowed("ADMIN")
     @GET
     @Path("/{id}/cars")
     public List<CarView> getCar(@PathParam("id") String id){

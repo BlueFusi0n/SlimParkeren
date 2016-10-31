@@ -2,6 +2,7 @@ package nl.groep2.cnl.slim_parkeren.resource;
 
 import java.util.List;
 
+import javax.annotation.security.RolesAllowed;
 import javax.inject.Inject;
 import javax.validation.Valid;
 import javax.ws.rs.Consumes;
@@ -49,6 +50,7 @@ public class BookingResource extends BaseResource {
 		this.bookingPresenter = bookingPresenter;
 	}
 	
+	@RolesAllowed("ADMIN")
 	@POST
 	public ResponseView addBooking(@Valid Booking booking){
 		Customer customer = customerService.getByEmail(booking.getCustomer().getEmail());
@@ -74,6 +76,7 @@ public class BookingResource extends BaseResource {
     	return bookingId != null ? responsePresenter.present(bookingId, "Success") : responsePresenter.present(null, "Failure");
 	}
 	
+	@RolesAllowed("ADMIN")
 	@GET
 	public List<BookingView> get(){
 		return bookingPresenter.present(bookingService.getAll());
