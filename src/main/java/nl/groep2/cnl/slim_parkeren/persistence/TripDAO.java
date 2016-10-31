@@ -9,9 +9,7 @@ import javax.ws.rs.core.Response;
 import org.bson.types.ObjectId;
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.query.Query;
-import org.mongodb.morphia.query.UpdateOperations;
 
-import nl.groep2.cnl.slim_parkeren.model.Customer;
 import nl.groep2.cnl.slim_parkeren.model.Trip;
 
 public class TripDAO extends BaseDAO<Trip> {

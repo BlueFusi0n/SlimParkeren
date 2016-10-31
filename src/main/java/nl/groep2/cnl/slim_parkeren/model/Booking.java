@@ -1,7 +1,5 @@
 package nl.groep2.cnl.slim_parkeren.model;
 
-import java.util.Currency;
-
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotEmpty;

@@ -1,7 +1,5 @@
 package nl.groep2.cnl.slim_parkeren.resource;
 
-
-import java.util.Date;
 import java.util.List;
 
 import javax.annotation.security.RolesAllowed;

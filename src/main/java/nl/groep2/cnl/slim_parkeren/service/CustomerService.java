@@ -6,20 +6,16 @@ import javax.ws.rs.core.Response;
 
 import org.bson.types.ObjectId;
 
-import nl.groep2.cnl.slim_parkeren.model.Car;
 import nl.groep2.cnl.slim_parkeren.model.Customer;
-import nl.groep2.cnl.slim_parkeren.persistence.CarDAO;
 import nl.groep2.cnl.slim_parkeren.persistence.CustomerDAO;
 
 public class CustomerService extends BaseService {
 
 	private final CustomerDAO customerDAO;
-	private final CarDAO carDAO;
     
     @Inject
-    public CustomerService(CustomerDAO customerDAO, CarDAO carDAO){
+    public CustomerService(CustomerDAO customerDAO){
         this.customerDAO = customerDAO;
-        this.carDAO = carDAO;
     }
     
     public Customer get(String id){

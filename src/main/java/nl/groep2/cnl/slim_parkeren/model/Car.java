@@ -2,7 +2,6 @@ package nl.groep2.cnl.slim_parkeren.model;
 
 import javax.validation.constraints.Pattern;
 
-import org.bson.types.ObjectId;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.mongodb.morphia.annotations.Entity;
 
