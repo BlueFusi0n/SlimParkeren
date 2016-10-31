@@ -19,8 +19,12 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import org.bson.types.ObjectId;
+
 import nl.groep2.cnl.slim_parkeren.model.Trip;
+import nl.groep2.cnl.slim_parkeren.presentation.ResponsePresenter;
 import nl.groep2.cnl.slim_parkeren.presentation.TripPresenter;
+import nl.groep2.cnl.slim_parkeren.presentation.model.ResponseView;
 import nl.groep2.cnl.slim_parkeren.presentation.model.TripView;
 import nl.groep2.cnl.slim_parkeren.service.TripService;
 
@@ -32,11 +36,13 @@ public class TripResource extends BaseResource{
 	
     private final TripService tripService;
     private final TripPresenter tripPresenter;
+    private final ResponsePresenter responsePresenter;
 
     @Inject
-    public TripResource(TripService tripService, TripPresenter tripPresenter){
+    public TripResource(TripService tripService, TripPresenter tripPresenter, ResponsePresenter responsePresenter){
         this.tripService = tripService;
         this.tripPresenter = tripPresenter;
+        this.responsePresenter = responsePresenter;
     }
     
     @RolesAllowed("ADMIN")
@@ -70,8 +76,10 @@ public class TripResource extends BaseResource{
     
     @RolesAllowed("ADMIN")
     @POST
-    public Response create(@Valid Trip trip){
-		return tripService.create(trip);
+    public ResponseView create(@Valid Trip trip){
+		ObjectId tripId = tripService.create(trip);		
+    	return tripId != null ? responsePresenter.present(tripId, "Success") : responsePresenter.present(null, "Failure");
+
     }
        
     @RolesAllowed("ADMIN")

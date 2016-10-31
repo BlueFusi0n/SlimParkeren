@@ -15,14 +15,15 @@ public class CarPresenter extends BasePresenter {
 		carView.color = car.getColor();
 		carView.licensePlate = car.getLicensePlate();
 		carView.type = car.getType();    
-		carView.customerId = car.getCustomerId();
+		if(car.getCustomerId() != null)
+			carView.customerId = car.getCustomerId();
         return carView;
     }
 
     public List<CarView> present( List<Car> cars )
     {
         List<CarView> carViews = new ArrayList<CarView>();
-        
+        if(cars == null) return null;
         for( Car car : cars)
         	carViews.add(present(car));
         

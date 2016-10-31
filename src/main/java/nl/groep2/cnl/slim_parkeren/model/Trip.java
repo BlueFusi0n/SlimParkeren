@@ -11,9 +11,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Entity(value = "Trips", noClassnameStored = true)
 public class Trip extends EntityModel{
-	
-	
-	
 	@NotEmpty
 	@JsonProperty("FlightNr1")
 	private String flightNr1;
@@ -61,6 +58,4 @@ public class Trip extends EntityModel{
 	public void setDepartureDate(Date departureDate) {
 		this.departureDate = departureDate;
 	}
-	
-	
 }

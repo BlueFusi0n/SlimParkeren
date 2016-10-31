@@ -5,6 +5,8 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.ws.rs.core.Response;
 
+import org.bson.types.ObjectId;
+
 import nl.groep2.cnl.slim_parkeren.model.Car;
 import nl.groep2.cnl.slim_parkeren.persistence.CarDAO;
 
@@ -17,8 +19,12 @@ public class CarService extends BaseService {
         this.carDAO = carDAO;
     }
     
-    public Car get(String license){
-    	return carDAO.get(license);
+    public Car get(String id){
+    	return carDAO.get(id);
+    }
+    
+    public Car getByLicense(String license){
+    	return carDAO.getByLicense(license);
     }
     
     public List<Car> getAllByCustomerId(String id){
@@ -33,7 +39,7 @@ public class CarService extends BaseService {
     	return carDAO.getAllByColor(color);
     }
     
-    public Response add(String id, Car car){
+    public ObjectId add(String id, Car car){
     	return carDAO.addCar(id, car);
     }
     

@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.ws.rs.core.Response;
 
+import org.bson.types.ObjectId;
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.query.Query;
 import org.mongodb.morphia.query.UpdateOperations;
@@ -22,10 +23,9 @@ public class CustomerDAO extends BaseDAO<Customer> {
         this.carDAO = carDAO;
     }
     
-    public Response createCustomer(Customer customer){
-    	if(save( customer ) != null)
-    		return Response.status(Response.Status.CREATED).build();
-    	return Response.serverError().build();  
+    public ObjectId createCustomer(Customer customer){
+    	return (ObjectId) save( customer ).getId();
+    	
     }
     
     public Customer getByEmail(String email){
@@ -38,6 +38,15 @@ public class CustomerDAO extends BaseDAO<Customer> {
     	List<Car> cars = carDAO.getByCustomerId(id);
     	customer.setCars(cars);
     	return customer;    	
+    }
+    
+    public List<Customer> getAll(){
+    	List<Customer> customers = super.getAll();
+    	for(Customer customer : customers){
+	    	List<Car> cars = carDAO.getByCustomerId(customer.getId().toString());
+	    	customer.setCars(cars);
+    	}
+    	return customers;    
     }
     
     public Response addAll(List<Customer> customers){

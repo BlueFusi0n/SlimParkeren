@@ -16,14 +16,18 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import org.bson.types.ObjectId;
+
 import io.dropwizard.auth.Auth;
 import nl.groep2.cnl.slim_parkeren.model.Car;
 import nl.groep2.cnl.slim_parkeren.model.Customer;
 import nl.groep2.cnl.slim_parkeren.model.User;
 import nl.groep2.cnl.slim_parkeren.presentation.CarPresenter;
 import nl.groep2.cnl.slim_parkeren.presentation.CustomerPresenter;
+import nl.groep2.cnl.slim_parkeren.presentation.ResponsePresenter;
 import nl.groep2.cnl.slim_parkeren.presentation.model.CarView;
 import nl.groep2.cnl.slim_parkeren.presentation.model.CustomerView;
+import nl.groep2.cnl.slim_parkeren.presentation.model.ResponseView;
 import nl.groep2.cnl.slim_parkeren.service.CarService;
 import nl.groep2.cnl.slim_parkeren.service.CustomerService;
 
@@ -36,13 +40,15 @@ public class CustomerResource extends BaseResource {
     private final CarService carService;
     private final CustomerPresenter customerPresenter;
     private final CarPresenter carPresenter;
+    private final ResponsePresenter responsePresenter;
 
     @Inject
-    public CustomerResource(CustomerService customerService, CustomerPresenter customerPresenter, CarService carService, CarPresenter carPresenter){
+    public CustomerResource(CustomerService customerService, CustomerPresenter customerPresenter, CarService carService, CarPresenter carPresenter, ResponsePresenter responsePresenter){
     	this.customerService = customerService;
     	this.customerPresenter = customerPresenter;
     	this.carService = carService;
     	this.carPresenter = carPresenter;
+    	this.responsePresenter = responsePresenter;
     }
     
     @RolesAllowed("ADMIN")
@@ -65,17 +71,19 @@ public class CustomerResource extends BaseResource {
     
     @RolesAllowed("ADMIN")
     @POST
-    public Response add(@Valid Customer customer){
-		return customerService.add(customer);
+    public ResponseView add(@Valid Customer customer){
+    	ObjectId id = customerService.add(customer);
+    	return id != null ? responsePresenter.present(id, "Success") : responsePresenter.present(null, "Failure");
     }
     
     @POST
     @Path("/{id}/cars")
-    public Response addCar(@PathParam("id") String id, @Valid Car car){
+    public ResponseView addCar(@PathParam("id") String id, @Valid Car car){
     	Customer customer = customerService.get(id);
     	if(customer == null)
-    		return Response.noContent().build();
-    	return carService.add(id, car);
+    		return responsePresenter.present(null, "Failure");
+    	ObjectId carId = carService.add(id, car);
+    	return carId != null ? responsePresenter.present(carId, "Success") : responsePresenter.present(null, "Failure");
     }
     
     @GET

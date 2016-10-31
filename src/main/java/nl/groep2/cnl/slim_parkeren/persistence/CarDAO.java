@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.ws.rs.core.Response;
 
+import org.bson.types.ObjectId;
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.query.Query;
 
@@ -22,16 +23,20 @@ public class CarDAO extends BaseDAO<Car> {
 		Query<Car> query = createQuery().field("color").equalIgnoreCase(color);
 		return find(query).asList();
 	}
+	
+	public Car getByLicense(String license){
+		Query<Car> query = createQuery().field("licensePlate").equalIgnoreCase(license);
+    	Car car = find(query).get();
+    	return car;
+	}
     
-    public Response addCar(String id, Car car){
+    public ObjectId addCar(String id, Car car){
     	Query<Car> query = createQuery().field("licensePlate").equalIgnoreCase(car.getLicensePlate());
     	if(find(query).get() == null){
 	    	car.setCustomerId(id);
-	    	if(save(car) != null)
-	    		return Response.status(Response.Status.CREATED).build();   	 
-	    	return Response.serverError().build();
+	    	return (ObjectId) save(car).getId();
     	}
-		return Response.notModified("Car already exists").build();
+		return null;
     }
     
     public Response addCars(List<Car> cars){

@@ -6,6 +6,7 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.ws.rs.core.Response;
 
+import org.bson.types.ObjectId;
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.query.Query;
 import org.mongodb.morphia.query.UpdateOperations;
@@ -22,11 +23,8 @@ public class TripDAO extends BaseDAO<Trip> {
 	}
 
 	
-    public Response createTrip(Trip trip){
-    	if(save( trip ) != null)
-    		return Response.ok().build();
-    	 else 
-    		return Response.serverError().build();  
+    public ObjectId createTrip(Trip trip){
+    	return (ObjectId) save(trip).getId();
     }
     
     public Response updateTrip(Trip t, Trip trip){
@@ -72,5 +70,6 @@ public class TripDAO extends BaseDAO<Trip> {
     		return Response.serverError().build();  
     	}
     }
+    
 }
 

@@ -4,6 +4,8 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.ws.rs.core.Response;
 
+import org.bson.types.ObjectId;
+
 import nl.groep2.cnl.slim_parkeren.model.Car;
 import nl.groep2.cnl.slim_parkeren.model.Customer;
 import nl.groep2.cnl.slim_parkeren.persistence.CarDAO;
@@ -32,7 +34,7 @@ public class CustomerService extends BaseService {
         return customerDAO.getAll();
     }
     
-    public Response add(Customer customer){
+    public ObjectId add(Customer customer){
     	return customerDAO.createCustomer(customer);
     }
     

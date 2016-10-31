@@ -43,7 +43,7 @@ public class DiscountResource extends BaseResource{
     	
     	List<Discount> listOfDiscounts;
     	
-    	if (String.valueOf(amount)	!= null)
+    	if (amount	!= 0)
     		listOfDiscounts = discountService.getSome(amount);
     	else
 	        listOfDiscounts = discountService.getAll();
